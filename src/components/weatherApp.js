@@ -33,7 +33,7 @@ function WeatherApp() {
 
     React.useEffect(() => {
         if (search !== "") {
-            let apiKey = "3ea758f67c0f49cdb57150247231212";
+            let apiKey = "021161c05cc24d78897190633240103";
             fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${search}`)
                 .then(res => res.json())
                 .then(data => setForecast(data))

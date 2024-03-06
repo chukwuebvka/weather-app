@@ -14,29 +14,33 @@ function WeatherApp() {
         text: "",
     })
     const [forecast, setForecast] = React.useState()
-    const [search, setSearch] = React.useState()
+    const [search, setSearch] = React.useState("")
 
     function getWeatherForecast() {
-        setWeather(prevWeather => {
-            return {
-                ...prevWeather,
-                cloudImage: forecast.current.condition.icon,
-                text: forecast.current.condition.text,
-                temperature: forecast.current.temp_c,
-                city: forecast.location.name,
-                country: forecast.location.country,
-                humidity: forecast.current.humidity,
-                windSpeed: forecast.current.wind_kph,
-            }
-        })
+            if (forecast) {
+            setWeather(prevWeather => {
+                return {
+                    ...prevWeather,
+                    cloudImage: "http://openweathermap.org/img/wn/" + forecast.weather[0].icon + ".png",
+                    text: forecast.weather[0].main,
+                    temperature: forecast.main.temp,
+                    city: forecast.name,
+                    country: forecast.sys.country,
+                    humidity: forecast.main.humidity,
+                    windSpeed: forecast.wind.speed,
+                }
+            })
+        }
+
     }
 
     React.useEffect(() => {
         if (search !== "") {
-            let apiKey = "021161c05cc24d78897190633240103";
-            fetch(`http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${search}`)
+            let apiKey = "9d4765d2ccd79eb61a0fded2ab1c6606";
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`)
                 .then(res => res.json())
                 .then(data => setForecast(data))
+                // .then(data => console.log(data))
                 .catch((error) => console.error('Error fetching weather data:', error));
             }
         }, [search]);
@@ -66,6 +70,7 @@ function WeatherApp() {
                         name="search"
                         value={search}
                         onChange={event => setSearch(event.target.value)}
+                        // onKeyDown={(event) => event.key === "Enter" && searchResultData(searchCity)}
                     />
                     <button onClick={getWeatherForecast}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6">
@@ -115,6 +120,6 @@ function WeatherApp() {
         </div>
     </div>
   )
-}
+}                 
 
 export default WeatherApp;

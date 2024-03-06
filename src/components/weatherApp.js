@@ -79,9 +79,6 @@ function WeatherApp() {
                         </svg>
                     </button>
                 </div>
-
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-
                 {weather.cloudImage && <div>
                     <img 
                         src={weather.cloudImage}

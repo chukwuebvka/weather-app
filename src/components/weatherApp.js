@@ -21,8 +21,8 @@ function WeatherApp() {
             setWeather(prevWeather => {
                 return {
                     ...prevWeather,
-                    cloudImage: "http://openweathermap.org/img/wn/" + forecast.weather[0].icon + ".png",
-                    text: forecast.weather[0].main,
+                    cloudImage: "https://openweathermap.org/img/wn/" + forecast.weather[0].icon + ".png",
+                    text: forecast.weather[0].description,
                     temperature: forecast.main.temp,
                     city: forecast.name,
                     country: forecast.sys.country,
@@ -55,6 +55,7 @@ function WeatherApp() {
                 controls={false}
                 muted
                 autoPlay
+                playsInline
                 className="w-full h-full object-cover"
             />
             
@@ -78,6 +79,9 @@ function WeatherApp() {
                         </svg>
                     </button>
                 </div>
+
+                {error && <p style={{ color: 'red' }}>{error}</p>}
+
                 {weather.cloudImage && <div>
                     <img 
                         src={weather.cloudImage}
@@ -87,7 +91,7 @@ function WeatherApp() {
                 </div>}
                 <p className="text-sm">{weather.text}</p>
                 <div className="font-bold text-xl m-4">
-                    {weather.temperature && <h1>{weather.temperature}°C</h1>}
+                    {weather.temperature && <h1>{weather.temperature} °C</h1>}
                 </div>
                 <div className="text-lg">
                     {weather.city && <h3>{weather.city}, {weather.country}</h3>}

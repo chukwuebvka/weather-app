@@ -32,17 +32,33 @@ function WeatherApp() {
                 }
             })
         }
+
     }
+    const [error, setError] = React.useState(null);
 
     React.useEffect(() => {
-        if (search !== "") {
-            let apiKey = "9d4765d2ccd79eb61a0fded2ab1c6606";
-            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=${apiKey}`)
-                .then(res => res.json())
-                .then(data => setForecast(data))
-                .catch((error) => console.error('Error fetching weather data:', error));
+        const getData = setTimeout(() => {
+            if (search !== "") {
+                fetch(`https://api.openweathermap.org/data/2.5/weather?q=${search}&units=metric&appid=9d4765d2ccd79eb61a0fded2ab1c6606`)
+                    .then(res => {
+                        if (!res.ok) {
+                            throw new Error('City not found');
+                        }
+                        return res.json();
+                    })
+                    .then(data => {
+                        setForecast(data);
+                        setError(null); // Clear previous errors if any
+                    })
+                    .catch((error) => {
+                        setError('Error fetching weather data. Please enter a city.');
+                        // console.error('Error fetching weather data:', error);
+                    });
             }
-        }, [search]);
+        }, 2000)
+
+        return () => clearTimeout(getData)
+    }, [search]);
     
   return (
     <div className="flex justify-start items-center flex-col h-screen">
@@ -80,6 +96,9 @@ function WeatherApp() {
                         </svg>
                     </button>
                 </div>
+
+                {error && <p style={{ color: 'blue' }}>{error}</p>}
+
                 {weather.cloudImage && <div>
                     <img 
                         src={weather.cloudImage}

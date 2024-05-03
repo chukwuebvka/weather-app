@@ -65,7 +65,6 @@ function WeatherApp() {
         <div className="relative w-full h-full">
             <img 
                 src={cloudsImage}
-                alt="Static Image" 
                 className="sm:hidden w-full h-full object-cover" 
             />
             <video 

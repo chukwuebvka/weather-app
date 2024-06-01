@@ -36,6 +36,12 @@ function WeatherApp() {
     }
     const [error, setError] = React.useState(null);
 
+    function handleKeyDown() {
+      if (event.key === 'Enter') {
+        getWeatherForecast();
+      }
+    };
+
     React.useEffect(() => {
         const getData = setTimeout(() => {
             if (search !== "") {
@@ -89,6 +95,7 @@ function WeatherApp() {
                         name="search"
                         value={search}
                         onChange={event => setSearch(event.target.value)}
+                        onKeyDown={handleKeyDown}
                     />
                     <button onClick={getWeatherForecast}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6">

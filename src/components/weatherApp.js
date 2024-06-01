@@ -36,7 +36,7 @@ function WeatherApp() {
     }
     const [error, setError] = React.useState(null);
 
-    function handleKeyDown() {
+    function handleKeyDown(event) {
       if (event.key === 'Enter') {
         getWeatherForecast();
       }
